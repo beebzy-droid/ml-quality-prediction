@@ -15,9 +15,7 @@ using a tuned XGBoost model with SHAP explainability — replacing a
 
 ## 📊 Live App
 
-Run locally with:
-
-    streamlit run app/app.py
+🔗 [View on Streamlit](https://ml-quality-prediction-x8jhkgu8az9hdhwyxscjrm.streamlit.app)
 
 ## 🛠️ Tech Stack
 
@@ -79,6 +77,39 @@ Run locally with:
 | 💊 Pharma | Purity | Drives regulatory compliance |
 | ⚗️ Chemicals | Viscosity | Determines product grade |
 
+## 📸 Screenshots
+
+### Correlation Heatmap
+![Correlation Heatmap](data/eda_01_correlation_heatmap.png)
+
+### 3D Response Surfaces
+![3D Surfaces](data/eda_04_3d_surfaces.png)
+
+### Outlier Detection
+![Outlier Detection](data/eda_05_outliers.png)
+
+### SHAP Feature Importance — Purity
+![SHAP Purity](data/eval_02_shap_purity.png)
+
+### Residual Analysis
+![Residuals](data/eval_01_residuals.png)
+
+### What-if Analysis — Temperature Effect
+![What-if](data/eval_04_whatif_temperature.png)
+
+## 🤖 What-if Analysis Example
+
+| Temp (°C) | Moisture (%) | Viscosity (cP) | Purity (%) | Color (ΔE) |
+|---|---|---|---|---|
+| 70 | 11.06 | 483.5 | 98.28 | 5.18 |
+| 80 | 10.24 | 469.7 | 98.82 | 5.40 |
+| **90** | **9.19** | **459.3** | **99.03** | **5.72** |
+| 100 | 8.62 | 448.5 | 98.81 | 5.79 |
+| 110 | 7.65 | 438.9 | 98.17 | 5.72 |
+| 120 | 7.10 | 428.0 | 97.14 | 6.04 |
+
+> Run at **90°C** for peak purity. Above 100°C purity degrades with no compensating benefit.
+
 ## 📁 Project Structure
 
     quality-prediction-project/
@@ -110,6 +141,7 @@ Run locally with:
     ├── docs/
     │   ├── problem_statement.md
     │   └── kpi_targets.md
+    ├── requirements.txt
     └── README.md
 
 ## 🚀 How to Run
@@ -121,7 +153,7 @@ Run locally with:
 
 ### 2. Install dependencies
 
-    pip install numpy pandas scikit-learn xgboost lightgbm shap plotly optuna streamlit joblib matplotlib seaborn scipy
+    pip install -r requirements.txt
 
 ### 3. Generate the dataset
 
@@ -144,16 +176,3 @@ Run locally with:
 ### 7. Launch the app
 
     streamlit run app/app.py
-
-## 🤖 What-if Analysis Example
-
-| Temp (°C) | Moisture (%) | Viscosity (cP) | Purity (%) | Color (ΔE) |
-|---|---|---|---|---|
-| 70 | 11.06 | 483.5 | 98.28 | 5.18 |
-| 80 | 10.24 | 469.7 | 98.82 | 5.40 |
-| **90** | **9.19** | **459.3** | **99.03** | **5.72** |
-| 100 | 8.62 | 448.5 | 98.81 | 5.79 |
-| 110 | 7.65 | 438.9 | 98.17 | 5.72 |
-| 120 | 7.10 | 428.0 | 97.14 | 6.04 |
-
-> Run at **90°C** for peak purity. Above 100°C purity degrades with no compensating benefit.
