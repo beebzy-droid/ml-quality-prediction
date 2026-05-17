@@ -1,32 +1,55 @@
 # 🏭 ML Quality Prediction — Process Manufacturing
 
-Predict **moisture, viscosity, purity, and color deviation** from 
-real-time process conditions using a tuned XGBoost multi-output 
-regression model.
+A full end-to-end multi-output regression system that predicts
+**moisture, viscosity, purity, and color deviation** from real-time
+process conditions — replicating what process engineers do manually
+in food, chemicals, and pharma manufacturing.
 
-> Replaces 4-hour lab turnaround with a **2-second inference.**
+## 🎯 Project Overview
 
----
+Built a complete ML quality prediction pipeline that takes 4 process
+inputs (reactor temperature, mixing speed, residence time, feed
+composition) and predicts 4 continuous quality targets simultaneously
+using a tuned XGBoost model with SHAP explainability — replacing a
+4-hour lab turnaround with a 2-second inference.
 
-## Business Impact
-
-| Problem | Solution |
-|---|---|
-| Lab QC takes 4 hours per batch | Model predicts in < 2 seconds |
-| Off-spec batches caught too late | Real-time prediction flags issues early |
-| Engineers cannot see input-output tradeoffs | What-if analysis built into the app |
-
----
-
-## Live App
+## 📊 Live App
 
 Run locally with:
 
     streamlit run app/app.py
 
----
+## 🛠️ Tech Stack
 
-## Model Performance
+| Layer | Tool |
+|---|---|
+| Data Generation | Python, NumPy, Pandas |
+| Feature Engineering | Physics-informed interaction terms |
+| Modeling | Scikit-learn, XGBoost, MultiOutputRegressor |
+| Hyperparameter Tuning | Optuna (50 trials) |
+| Explainability | SHAP (TreeExplainer, waterfall plots) |
+| Web App | Streamlit |
+| Version Control | Git & GitHub |
+
+## 📈 Key Results
+
+- **3,000** synthetic production batches generated and processed
+- **R² = 0.986** — viscosity prediction (near-perfect signal capture)
+- **R² = 0.865** — moisture prediction
+- **4 models** benchmarked — Linear Regression, Random Forest, XGBoost, MLP
+- **Optuna tuning** — 50 trials to find best XGBoost hyperparameters
+- **16 engineered features** — physics-informed interaction terms
+- **All 4 KPI thresholds met** on held-out test set
+
+## 🔍 Key Findings
+
+- Purity peaks at **90–95°C** — above 100°C over-reaction degrades product
+- Viscosity is dominated by mixing speed (r = −0.98) — near-linear relationship
+- Purity non-linearity confirmed — Linear Regression fails, XGBoost captures sweet spot
+- 42 outlier batches (1.4%) correctly flagged — matching injected failure rate
+- Feed composition is the strongest driver of color deviation (r = −0.71)
+
+## 📊 Model Performance
 
 | Target | R² | RMSE | KPI | Status |
 |---|---|---|---|---|
@@ -35,17 +58,28 @@ Run locally with:
 | Purity | 0.656 | 0.546 % | ≤ 0.55 % | ✅ |
 | Color deviation | 0.495 | 0.874 ΔE | ≤ 2.0 ΔE | ✅ |
 
----
+## 💼 Business Impact
 
-## Key Engineering Finding
+| Problem | Solution |
+|---|---|
+| Lab QC takes 4 hours per batch | Model predicts in < 2 seconds |
+| Off-spec batches caught too late | Real-time prediction flags issues before release |
+| Engineers cannot see input-output tradeoffs | Built-in what-if analysis sweeps any process variable |
+| Black-box model engineers won't trust | SHAP waterfall explains every single prediction |
+| One model per quality target = maintenance burden | Single multi-output model predicts all 4 targets simultaneously |
 
-Run the reactor at 90–95°C. Purity peaks at 99%, moisture sits at
-9.0–9.2%, and viscosity holds at 450–460 cP. Above 100°C purity
-degrades with no compensating benefit.
+> **Bottom line:** Replaces a 4-hour lab turnaround with a 2-second inference —
+> catching off-spec batches before they leave the reactor.
 
----
+## 🏭 Industry Applications
 
-## Project Structure
+| Industry | Target | Business Value |
+|---|---|---|
+| 🍞 Food manufacturing | Moisture | Controls shelf life prediction |
+| 💊 Pharma | Purity | Drives regulatory compliance |
+| ⚗️ Chemicals | Viscosity | Determines product grade |
+
+## 📁 Project Structure
 
     quality-prediction-project/
     ├── data/
@@ -57,10 +91,7 @@ degrades with no compensating benefit.
     │   ├── eda_04_3d_surfaces.png
     │   ├── eda_05_outliers.png
     │   ├── eval_01_residuals.png
-    │   ├── eval_02_shap_moisture.png
-    │   ├── eval_02_shap_viscosity.png
-    │   ├── eval_02_shap_purity.png
-    │   ├── eval_02_shap_color_deviation.png
+    │   ├── eval_02_shap_*.png
     │   ├── eval_03_waterfall_*.png
     │   └── eval_04_whatif_temperature.png
     ├── notebooks/
@@ -81,46 +112,48 @@ degrades with no compensating benefit.
     │   └── kpi_targets.md
     └── README.md
 
----
+## 🚀 How to Run
 
-## Tech Stack
+### 1. Create and activate environment
 
-- Python 3.11
-- XGBoost + scikit-learn — modeling
-- SHAP — explainability
-- Optuna — hyperparameter tuning
-- Streamlit — interactive app
-- Pandas + NumPy — data engineering
-- Matplotlib + Seaborn — visualization
+    conda create -n quality-prediction python=3.11 -y
+    conda activate quality-prediction
 
----
+### 2. Install dependencies
 
-## Phases Completed
+    pip install numpy pandas scikit-learn xgboost lightgbm shap plotly optuna streamlit joblib matplotlib seaborn scipy
 
-| Phase | Description | Deliverable |
-|---|---|---|
-| 1 | Problem definition | Problem statement + KPIs |
-| 2 | Synthetic data generation | 3000-batch physics dataset |
-| 3 | Exploratory data analysis | 5 visualization plots |
-| 4 | Feature engineering + modeling | 4 models + Optuna tuning |
-| 5 | Evaluation + SHAP | 10 evaluation plots + what-if |
-| 6 | Streamlit app | Live interactive tool |
+### 3. Generate the dataset
 
----
+    python notebooks/01_data_generation.py
 
-## Industry Applications
+### 4. Run EDA
 
-- 🍞 **Food manufacturing** — moisture controls shelf life
-- 💊 **Pharma** — purity drives regulatory compliance
-- ⚗️ **Chemicals** — viscosity determines product grade
+    python notebooks/02_eda.py
 
----
+### 5. Train and tune models
 
-## Dataset
+    python notebooks/03_modeling.py
+    python notebooks/04_tuning.py
+    python notebooks/05_improved_model.py
 
-Synthetic dataset of 3000 production batches generated using
-physics-informed equations with:
-- Non-linear input interactions (temp x residence time → purity)
-- Equipment failure batches injected (1%)
-- Seasonal feed composition shift (last 10% of batches)
-- Gaussian sensor noise on all targets
+### 6. Run SHAP evaluation
+
+    python notebooks/06_shap_evaluation.py
+
+### 7. Launch the app
+
+    streamlit run app/app.py
+
+## 🤖 What-if Analysis Example
+
+| Temp (°C) | Moisture (%) | Viscosity (cP) | Purity (%) | Color (ΔE) |
+|---|---|---|---|---|
+| 70 | 11.06 | 483.5 | 98.28 | 5.18 |
+| 80 | 10.24 | 469.7 | 98.82 | 5.40 |
+| **90** | **9.19** | **459.3** | **99.03** | **5.72** |
+| 100 | 8.62 | 448.5 | 98.81 | 5.79 |
+| 110 | 7.65 | 438.9 | 98.17 | 5.72 |
+| 120 | 7.10 | 428.0 | 97.14 | 6.04 |
+
+> Run at **90°C** for peak purity. Above 100°C purity degrades with no compensating benefit.
