@@ -1,5 +1,11 @@
 # 🏭 ML Quality Prediction — Process Manufacturing
 
+![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)
+![Python](https://img.shields.io/badge/Python-3.x-blue.svg)
+![XGBoost](https://img.shields.io/badge/XGBoost-ML-red.svg)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.x-ff4b4b.svg)
+![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)
+
 A full end-to-end multi-output regression system that predicts
 **moisture, viscosity, purity, and color deviation** from real-time
 process conditions — replicating what process engineers do manually
@@ -176,3 +182,14 @@ using a tuned XGBoost model with SHAP explainability — replacing a
 ### 7. Launch the app
 
     streamlit run app/app.py
+
+## 📜 License & Attribution
+
+This project was built and designed by **beebzy-droid**.
+
+Licensed under the [MIT License](LICENSE) — you are free
+to use this code but must include attribution linking
+back to this repository.
+
+© 2026 beebzy-droid
+🔗 https://github.com/beebzy-droid/ml-quality-prediction
