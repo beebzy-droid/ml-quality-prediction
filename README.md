@@ -1,5 +1,4 @@
 # 🏭 ML Quality Prediction — Process Manufacturing
-
 ![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)
 ![Python](https://img.shields.io/badge/Python-3.x-blue.svg)
 ![XGBoost](https://img.shields.io/badge/XGBoost-ML-red.svg)
@@ -52,6 +51,35 @@ using a tuned XGBoost model with SHAP explainability — replacing a
 - Purity non-linearity confirmed — Linear Regression fails, XGBoost captures sweet spot
 - 42 outlier batches (1.4%) correctly flagged — matching injected failure rate
 - Feed composition is the strongest driver of color deviation (r = −0.71)
+
+## 💼 Business Impact
+
+| Metric | Value | Business Meaning |
+|---|---|---|
+| Prediction accuracy | R²=0.986 | 98.6% of quality variance explained by the model |
+| Quality targets predicted | 4 simultaneous | Full product quality profile per batch |
+| Batches analyzed | 3,000 | Statistically robust model training |
+| Early warning | Pre-completion prediction | Catch failures before batch finishes |
+| SHAP explainability | Per-feature contribution | Engineers know exactly WHY a batch will fail |
+| What-if analysis | Interactive parameter tuning | Operators can optimize inputs before production |
+| Model type | Multi-output XGBoost | Industry-proven gradient boosting for tabular data |
+
+### 💰 Financial Impact Estimate
+
+| Opportunity | Value |
+|---|---|
+| Batch failure prevention | Catch bad batches before completion = raw material saved |
+| Reduced lab testing | Model pre-screens batches → fewer physical tests needed |
+| Process optimization | SHAP identifies top input variables → targeted improvement |
+| Yield improvement | What-if analysis guides operators to optimal parameters |
+
+### ✅ Technical Achievements
+
+- **R²=0.986** across all 4 quality output targets simultaneously
+- **SHAP values** provide full model explainability — no black box
+- **Optuna hyperparameter tuning** — automated optimal model configuration
+- **Interactive Streamlit app** — non-technical operators can use it directly
+- **Multi-output regression** — predicts all quality dimensions in one model pass
 
 ## 📊 Model Performance
 
@@ -149,39 +177,6 @@ using a tuned XGBoost model with SHAP explainability — replacing a
     │   └── kpi_targets.md
     ├── requirements.txt
     └── README.md
-
-## 🚀 How to Run
-
-### 1. Create and activate environment
-
-    conda create -n quality-prediction python=3.11 -y
-    conda activate quality-prediction
-
-### 2. Install dependencies
-
-    pip install -r requirements.txt
-
-### 3. Generate the dataset
-
-    python notebooks/01_data_generation.py
-
-### 4. Run EDA
-
-    python notebooks/02_eda.py
-
-### 5. Train and tune models
-
-    python notebooks/03_modeling.py
-    python notebooks/04_tuning.py
-    python notebooks/05_improved_model.py
-
-### 6. Run SHAP evaluation
-
-    python notebooks/06_shap_evaluation.py
-
-### 7. Launch the app
-
-    streamlit run app/app.py
 
 ## 📜 License & Attribution
 
